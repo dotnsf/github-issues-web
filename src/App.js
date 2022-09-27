@@ -1,23 +1,12 @@
-import logo from './logo.svg';
-import './App.css';
+//. App.js
+import { Issues } from "./Issues";
 
-function App() {
+function App(){
+  const app_server = 'REACT_APP_APP_SERVER' in process.env ? process.env.REACT_APP_APP_SERVER : '';
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Issues appServer={app_server}/>
     </div>
   );
 }
