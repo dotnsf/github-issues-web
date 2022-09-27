@@ -34,6 +34,24 @@
   - `$ npm start`
 
 
+## Build
+
+- Build your web app in `github-issues-web`:
+
+  - `$ npm run build`
+
+- Run `github-issues-api` first with environment variable `CORS` as this app server:
+
+  - `$ cd ./github-issues-api`
+
+  - `$ CORS=http://localhost:8000 npm start`
+
+- Then run `github-issues-web` as static http server:
+
+  - `$ node app`
+ 
+
+
 ## Licensing
 
 This code is licensed under MIT.
