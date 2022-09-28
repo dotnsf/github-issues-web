@@ -1,15 +1,18 @@
 //. Issues.js
-import { useState } from 'react';
+import { VFC, useState, useEffect } from 'react';
+import { Redirect, useParams } from 'react-router-dom';
 import './Issues.css';
 
-export const Issues = ( {appServer} ) => {
-  const [ repo, setRepo ] = useState( '' );
+export const Issues : VFC = ( {appServer} ) => {
+  const params = useParams();  //. { user: "a", repo: "b" }
+  const user = params.user;
+  const repo = params.repo;
+
   const [ issues, setIssues ] = useState( [] );
-  const [ comments, setComments ] = useState( [] );
 
   const retrieveIssues = () => {
     //console.log( appServer, repo );
-    fetch( appServer + '/api/github/issues/' + repo )
+    fetch( appServer + '/api/github/issues/' + user + '/' + repo )
       .then( res => res.json() )
       .then( res => {
         if( res.status ){
@@ -28,34 +31,21 @@ export const Issues = ( {appServer} ) => {
       });
   }
 
-  const retrieveComments = ( issue_num ) => {
-    fetch( appServer + '/api/github/comments/' + repo + '?issue_num=' + issue_num )
-      .then( res => res.json() )
-      .then( res => {
-        if( res.status ){
-          //console.log( res.comments );
-          /*
-          [
-            { id: 1268.., body: 'xxxx', comments: 0, comments_url: 'https://..', labels: [..], milestone: null, number: 32, state: "open", title: "xxx", .. },
-              :
-          ]
-          */
-          if( res.comments.length ){
-            //console.log( 'setComments', res.comments );
-            setComments( res.comments );
-          }
-        }
-      });
+  const redirectToComments = ( issue_num ) => {
+    //return <Redirect to='/comments/{user}/{repo}'/>
+    window.location.href = '/comments/' + user + '/' + repo + '/' + issue_num;
   }
+
+  useEffect( () => {
+    //. 初回レンダリング時のみ実行
+    retrieveIssues();
+  }, [] );
 
   return (
     <div>
-      <div>
-        <input type="text" value={repo} onChange={(e)=>setRepo(e.target.value)}/>
-        <button onClick={()=>retrieveIssues()}>Issues</button>
+      <div className="issues-head">
+        <button onClick={() => window.history.back()}>戻る</button>
       </div>
-
-      <hr/>
 
       <h4>Issues</h4>
       <table id="issuesTable">
@@ -68,22 +58,8 @@ export const Issues = ( {appServer} ) => {
         <td>{issue.body}</td>
         <td>{issue.comments}</td>
         <td>
-          <button onClick={()=>retrieveComments(issue.number)}>Comments</button>
+          <button onClick={()=>redirectToComments(issue.number)}>Comments</button>
         </td>
-      </tr>
-      ) }
-      </tbody>
-      </table>
-
-      <hr/>
-
-      <h4>Comments</h4>
-      <table id="commentsTable">
-      <tbody>
-      { comments.map( ( comment, index ) => 
-      <tr key={index}>
-        <td>{comment.id}</td>
-        <td>{comment.body}</td>
       </tr>
       ) }
       </tbody>

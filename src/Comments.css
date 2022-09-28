@@ -1,7 +1,7 @@
-#issuesTable, td, th {
+#commentsTable, td, th {
   border: 2px #888 solid;
 }
 
-.issues-head{
+.comments-head{
   text-align: right;
 }
