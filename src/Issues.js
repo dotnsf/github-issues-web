@@ -2,6 +2,7 @@
 import { VFC, useState, useEffect } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import './Issues.css';
+import Markdown from 'marked-react';
 
 export const Issues : VFC = ( {appServer} ) => {
   const params = useParams();  //. { user: "a", repo: "b" }
@@ -55,7 +56,7 @@ export const Issues : VFC = ( {appServer} ) => {
         <td>{issue.number}</td>
         <td>{issue.title}</td>
         <td>{issue.state}</td>
-        <td>{issue.body}</td>
+        <td><pre><Markdown>{issue.body}</Markdown></pre></td>
         <td>{issue.comments}</td>
         <td>
           <button onClick={()=>redirectToComments(issue.number)}>Comments</button>

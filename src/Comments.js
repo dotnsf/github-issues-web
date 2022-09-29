@@ -2,6 +2,7 @@
 import { VFC, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './Comments.css';
+import Markdown from 'marked-react';
 
 export const Comments : VFC = ( {appServer} ) => {
   const params = useParams();  //. { user: "a", repo: "b", issue_num: "c" }
@@ -48,7 +49,7 @@ export const Comments : VFC = ( {appServer} ) => {
       { comments.map( ( comment, index ) => 
       <tr key={index}>
         <td>{comment.id}</td>
-        <td>{comment.body}</td>
+        <td><pre><Markdown>{comment.body}</Markdown></pre></td>
       </tr>
       ) }
       </tbody>
