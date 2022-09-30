@@ -10,15 +10,15 @@ function App(){
 
   return (
     <div>
-      <BrowserRouter>
+      <BrowserRouter basename="/github-issues-web/">
         <Switch>
-          <Route exact path="/(github-issues-web\/|)">
+          <Route exact path="/">
             <TopPage />
           </Route>
-          <Route path="/(github-issues-web\/|)issues/:user/:repo">
+          <Route path="/issues/:user/:repo">
             <Issues appServer={app_server}/>
           </Route>
-          <Route path="/(github-issues-web\/|)comments/:user/:repo/:issue_num">
+          <Route path="/comments/:user/:repo/:issue_num">
             <Comments appServer={app_server}/>
           </Route>
           <Route path="*">
