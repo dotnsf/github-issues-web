@@ -12,13 +12,13 @@ function App(){
     <div>
       <BrowserRouter>
         <Switch>
-          <Route exact path="/(github\-issues\-web\/|)">
+          <Route exact path="/(github-issues-web\/|)">
             <TopPage />
           </Route>
-          <Route path="/(github\-issues\-web\/|)issues/:user/:repo">
+          <Route path="/(github-issues-web\/|)issues/:user/:repo">
             <Issues appServer={app_server}/>
           </Route>
-          <Route path="/(github\-issues\-web\/|)comments/:user/:repo/:issue_num">
+          <Route path="/(github-issues-web\/|)comments/:user/:repo/:issue_num">
             <Comments appServer={app_server}/>
           </Route>
           <Route path="*">
